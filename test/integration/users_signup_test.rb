@@ -27,5 +27,8 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
     follow_redirect!
     assert_template 'users/show'
+    assert_not flash.empty?
+    assert_equal "Welcome to the Sample App!", flash[:success]
   end
+
 end
