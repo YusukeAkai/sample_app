@@ -16,4 +16,20 @@ class ActiveSupport::TestCase
   def is_logged_in?
     !session[:user_id].nil?
   end
+  # テストユーザーとしてログインする
+  def log_in_as(user)
+    session[:user_id] = user.id
+  end
+end
+
+class ActionDispatch::IntegrationTest
+  
+  def log_in_as(user, password:'password', remember_me:'1')
+    # remember_meの値が1なのでチェックボックスがONの状態
+    # remember_meの値はメソッドを呼び出す時に変化させるために指定しているため、空欄でも問題ない。
+    post login_path, params: { session: { email: user.email,
+                                          password: password,
+                                          remember_me: remember_me } }
+  end
+
 end
