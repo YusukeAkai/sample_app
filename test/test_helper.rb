@@ -12,5 +12,8 @@ class ActiveSupport::TestCase
   fixtures :all
   include ApplicationHelper
 
-  # （すべてのテストで使うその他のヘルパーメソッドは省略）
+  # テストユーザーがログインしていればtrueを返す
+  def is_logged_in?
+    !session[:user_id].nil?
+  end
 end
