@@ -15,7 +15,7 @@
         <li><%= link_to "Home", root_path %></li>
         <li><%= link_to "Help", help_path %></li>
         <% if logged_in? %>
-        <!-- current_userがから出ない場合はtrueを返される。 -->
+        <!-- current_userが空でない場合はtrueを返される。 -->
           <li><%= link_to "Users", '#' %></li>
           <!-- 遷移先のルートが設定されていないため、クリックしても何も起こらない -->
           <li class="dropdown">
