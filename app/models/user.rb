@@ -42,6 +42,7 @@ class User < ApplicationRecord
     # このattributeが属性に対応している。
     # remember_digestっていう表の属性に対して、digestメソッドを使用することでremember_tokenをハッシュ化して代入している。
     remember_digest
+    # ここのremember_digestはdbの記憶ダイジェストをメソッドの返り値として返している。
   end
 
   def authenticated?(remember_token)
@@ -57,6 +58,7 @@ class User < ApplicationRecord
 
   def session_token
     remember_digest || remember
+    # rememberメソッドが呼び出されて戻り値がremember_digestだから確定でtrueになる。
   end
-  
+
 end
