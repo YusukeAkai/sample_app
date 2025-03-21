@@ -10,7 +10,7 @@ class User < ApplicationRecord
   # ハッシュかしたパスワードをデータベースのpassword_digest属性に保存できる。
   # 電子署名でやった。
   # authenticateメソッドが使えるようになる。
-  validates :password, presence: true, length: { minimum: 8 }
+  validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
 
   class << self
     def digest(string)
@@ -47,6 +47,7 @@ class User < ApplicationRecord
 
   def authenticated?(remember_token)
     return false if remember_digest.nil?
+
     # ここでのremember_tokenは一番上で定義されたattr_accessor :remember_tokenとは異なる
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
@@ -60,5 +61,4 @@ class User < ApplicationRecord
     remember_digest || remember
     # rememberメソッドが呼び出されて戻り値がremember_digestだから確定でtrueになる。
   end
-
 end
