@@ -9,7 +9,7 @@ module SessionsHelper
       user = User.find_by(id: cookies.encrypted[:user_id])
       # 自動的にユーザーIDのcookies暗号が解除され、元に戻る。
       # id: cookies.encrypted[:user_id]ここは普通のIDに対応している。
-      if user&.authenticated?(cookies[:remember_token])
+      if user&.authenticated?(:remember, cookies[:remember_token])
         # パスワードで設定したauthenticateメソッドとは異なる点に注意
         # オリジナルで設定したメソッドで、Modelのuser.rbに記述してある。
         log_in user
