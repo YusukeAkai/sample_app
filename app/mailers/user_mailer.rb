@@ -6,9 +6,9 @@ class UserMailer < ApplicationMailer
     # ここのsubjectがメールの要件に相当する。
   end
 
-  def password_reset
-    @greeting = 'Hi'
-
-    mail to: 'to@example.org'
+  def password_reset(user)
+    @user = user
+    # なんでここで，@userを定義しているのか？
+    mail to: user.email, subject: 'Password reset'
   end
 end
