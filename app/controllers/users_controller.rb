@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: %i[edit update index destroy]
-  before_action :correct_user, only: %i[edit update show]
+  before_action :correct_user, only: %i[edit update]
   before_action :admin_user, only: :destroy
   # editアクションとupdateアクションの前にログインしているかを確認するlogged_in_userメソッドが実行される
   # ログインしていない場合、login画面にリダイレクトされる。
@@ -16,6 +16,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
     redirect_to root_url and return unless @user.activated?
   end
 
@@ -57,17 +58,6 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
     # ここのメソッドの意味としては、userシンボルが必須
     # 名前、メールアドレス、パスワード、パスワード確認のみが許可されている。
-  end
-
-  # ログイン済みユーザーかどうか確認
-  def logged_in_user
-    return if logged_in?
-
-    store_location
-    # セッション変数にforwarding_urlを保存する。
-    flash[:danger] = 'Please log in.'
-    redirect_to login_url, status: :see_other
-    # おそらくこの行を編集する。
   end
 
   # 正しいユーザーかどうか確認

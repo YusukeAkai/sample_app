@@ -16,6 +16,10 @@ class User < ApplicationRecord
   # authenticateメソッドが使えるようになる。
   validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
 
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
+
   class << self
     def digest(string)
       # クラスメソッドの定義

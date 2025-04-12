@@ -1,0 +1,8 @@
+<% if @feed_items.any? %>
+  <ol class="microposts">
+    <%= render @feed_items %>
+    <%# @feed_items = current_user.feed.paginate(page: params[:page]) %>
+  </ol>
+  <%= will_paginate @feed_items, params: { controller: :static_pages, action: :home }%>
+  <%# createアクションをした際にページネーションのコントローラとアクションを指定している．%>
+<% end %>

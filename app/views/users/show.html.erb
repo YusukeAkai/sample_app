@@ -10,9 +10,13 @@
   </aside>
 </div>
 
-<%= @user.name %>, <%= @user.email %>
-<p>created at <p>
-<%= @user.created_at %>
-<p>updated at <p>
-<%= @user.updated_at %>
+<div class="col-md-8">
+    <% if @user.microposts.any? %>
+      <h3>Microposts (<%= @user.microposts.count %>)</h3>
+      <ol class="microposts">
+        <%= render @microposts %>
+      </ol>
+      <%= will_paginate @microposts %>
+    <% end %>
+  </div>
 <%= Time.now %>
